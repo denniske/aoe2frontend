@@ -12,6 +12,7 @@ import {
 import {getConfig} from "./config";
 
 const config = getConfig();
+// const baseUrl = `http://localhost:3335`;
 const baseUrl = `https://data.${config.host}`;
 
 export async function fetchProfileRatings(params: IFetchProfileRatingParams) {
