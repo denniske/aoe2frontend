@@ -6,6 +6,7 @@ import Link from "next/link";
 import GlobalSearch from "@/components/global-search";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
+import {createClient} from "@/helper/supabase/server";
 
 polyfillCountryFlagEmojis();
 
@@ -16,9 +17,17 @@ export const metadata = {
     description: 'Track your games now.',
 }
 
-export default function RootLayout({children}: {
+export default async function RootLayout({children}: {
     children: React.ReactNode
 }) {
+
+    const supabase = await createClient()
+
+    const { data, error } = await supabase.auth.getUser()
+    // if (error || !data?.user) {
+    //     redirect('/login')
+    // }
+
     return (
         <ReactQueryClientProvider>
             <html lang="en">
@@ -69,14 +78,27 @@ export default function RootLayout({children}: {
                         </div>
 
                         {
-                            config.game == 'aoe2' &&
+                            data?.user &&
                             <div className="">
-                                <Link className="cursor-pointer hover:underline" href='/api-nightbot'
-                                      as={`/api-nightbot`}>
-                                    Api / Nightbot
+                                <Link className="cursor-pointer hover:underline" href='/' as={`/`}>
+                                    <button className="bg-gray-100 p-2 rounded-md">
+                                        Account {data?.user?.email}
+                                    </button>
                                 </Link>
                             </div>
                         }
+
+                        {
+                            !data?.user &&
+                            <div className="">
+                                <Link className="cursor-pointer hover:underline" href='/login' as={`/login`}>
+                                    <button className="bg-gray-100 p-2 rounded-md">
+                                        Login
+                                    </button>
+                                </Link>
+                            </div>
+                        }
+
                     </div>
 
                     {children}
@@ -84,14 +106,23 @@ export default function RootLayout({children}: {
                     <div className="flex-1"></div>
 
                     <div className="flex flex-row space-x-14 mt-4 mb-6 items-center">
-                        <div className="">
+
+                        {
+                            config.game == 'aoe2' &&
+                            <div className="">
+                                <Link className="cursor-pointer hover:underline" href='/api-nightbot'
+                                          as={`/api-nightbot`}>
+                                        Api / Nightbot
+                                    </Link>
+                                </div>
+                            }
+
                             <a href={`https://status.${config.host}`} target="_blank"
                                className="flex flex-row space-x-2 items-center cursor-pointer hover:underline">
                                 <span>Status</span>
                                 <FontAwesomeIcon icon={faUpRightFromSquare} className="w-4 h-4"
                                                  color="grey"/>
                             </a>
-                        </div>
                     </div>
 
                     <p className="pt-8 pb-4 text-xs md:text-sm text-center max-w-4xl mx-auto px-4 md:px-8">
