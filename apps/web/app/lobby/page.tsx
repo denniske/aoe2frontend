@@ -388,12 +388,12 @@ export function Player({player}: Props) {
                 }
             </div>
             <div className="w-9">{player.rating}</div>
-            <Link className="w-[150px] truncate cursor-pointer hover:underline" href='/profile/[profileId]' as={`/profile/${player.profileId}`}>
+            <Link className="w-[150px] truncate cursor-pointer hover:underline" href='/profile/[profileId]/page' as={`/profile/${player.profileId}`}>
                 {player.name}
             </Link>
             {
                 (player.name != 'Open' && player.name != 'Closed' && player.civName) &&
-                <Link className="flex flex-row space-x-1 items-center" href='/profile/[profileId]' as={`/profile/${player.profileId}`}>
+                <Link className="flex flex-row space-x-1 items-center" href='/profile/[profileId]/page' as={`/profile/${player.profileId}`}>
                     <img src={player.civImageUrl} className="w-[18px]"/>
                     <div className="w-[100px] truncate">{player.civName}</div>
                 </Link>

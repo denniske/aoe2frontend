@@ -1,33 +1,35 @@
+"use client";
+
 import {useState} from "react";
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
+import {keepPreviousData, useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {flatten} from "lodash";
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {fetchLeaderboards, fetchMatches, fetchProfile} from "../@/helper/api";
-import {ILeaderboardDef, IMatchesMatch, IPlayerNew, IProfileLeaderboardResult, ITeamNew} from "../@/helper/api.types";
-import useDebounce from "../@/hooks/use-debounce";
-import {formatAgo} from "../@/helper/util";
+import {fetchLeaderboards, fetchMatches, fetchProfile} from "@/helper/api";
+import {ILeaderboardDef, IMatchesMatch, IPlayerNew, IProfileLeaderboardResult, ITeamNew} from "@/helper/api.types";
+import useDebounce from "@/hooks/use-debounce";
+import {formatAgo} from "@/helper/util";
 import {differenceInSeconds, format} from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChartLine, faCheckCircle, faCrown, faSkull} from "@fortawesome/free-solid-svg-icons";
-import Rating from "../@/components/rating";
-import Tabs from "../@/components/tabs";
-import {classNames} from "../@/components/global-search";
-import LocalSearch from "../@/components/local-search";
-import {bgColor, borderColor, textColor} from "../@/components/style.utils";
+import Rating from "@/components/rating";
+import Tabs from "@/components/tabs";
+import {classNames} from "@/components/global-search";
+import LocalSearch from "@/components/local-search";
+import {bgColor, borderColor, textColor} from "@/components/style.utils";
+import {useParams} from "next/navigation";
 
 
 export default function ProfilePage() {
-    const profileIdStr = useRouter().query.profileId as string;
-    const profileId = profileIdStr ? parseInt(profileIdStr) : null;
-    const [leaderboard, setLeaderboard] = useState(null);
+    const params = useParams<{ profileId: string }>()
+    const profileId = params?.profileId ? parseInt(params.profileId) : undefined;
+    const [leaderboard, setLeaderboard] = useState<ILeaderboardDef>();
     const [search, setSearch] = useState('');
 
-    const leaderboards = useQuery(['leaderboards'], () => fetchLeaderboards(), {
-        // onSuccess: (data) => {
-        //     setLeaderboard(x => x || data[0]);
-        // },
+    const leaderboards = useQuery({
+        queryKey: ['leaderboards'],
+        queryFn: () => fetchLeaderboards(),
     });
+
 
     // const ratings = useQuery(['ratings', profileId], (context) => {
     //     return fetchProfileRatings({
@@ -47,17 +49,20 @@ export default function ProfilePage() {
 
     // const profile = useQuery(['profile', profileId], () => fetchProfile());
 
-    const profile = useQuery(
-        ['profile', profileId],
-        (context) => {
+    const profile = useQuery({
+        queryKey: ['profile', profileId],
+        queryFn: (context) => {
             return fetchProfile({
                 ...context,
                 profileId: profileId,
             });
-        }, {enabled: !!profileId});
+        },
+        enabled: !!profileId
+    });
 
-
-    // console.log('profile?.data', profile?.data);
+    console.log('profileId', profileId);
+    console.log('enabled', !!profileId);
+    console.log('profile?.data', profile?.data);
 
     if (!(leaderboards?.data && profileId && profile?.data)) {
         return <div></div>;
@@ -197,7 +202,7 @@ export default function ProfilePage() {
                         {
                             name: 'All',
                             current: leaderboard == null,
-                            onClick: () => setLeaderboard(null),
+                            onClick: () => setLeaderboard(undefined),
                         },
                         ...leaderboards?.data?.map((leaderboardDef: ILeaderboardDef) => ({
                             name: leaderboardDef.abbreviation,
@@ -284,7 +289,7 @@ export function PlayerList({
                                leaderboard,
                                search,
                                profileId
-                           }: { leaderboard: ILeaderboardDef, search: string, profileId: number }) {
+                           }: { leaderboard?: ILeaderboardDef, search: string, profileId: number }) {
     const debouncedSearch = useDebounce(search, 600);
 
     const {
@@ -295,19 +300,20 @@ export function PlayerList({
         isFetching,
         isFetchingNextPage,
         status,
-    } = useInfiniteQuery(
-        ['matches', profileId, debouncedSearch, leaderboard?.leaderboardId],
-        (context) => {
+    } = useInfiniteQuery({
+        queryKey: ['matches', profileId, debouncedSearch, leaderboard?.leaderboardId],
+        queryFn: (context) => {
             return fetchMatches({
                 ...context,
                 profileIds: [context.queryKey[1] as number],
                 search: context.queryKey[2] as string,
                 leaderboardIds: [context.queryKey[3] as number],
             });
-        }, {
-            getNextPageParam: (lastPage, pages) => lastPage.matches.length === lastPage.perPage ? lastPage.page + 1 : null,
-            keepPreviousData: true,
-        })
+        },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, pages) => lastPage.matches.length === lastPage.perPage ? lastPage.page + 1 : null,
+        placeholderData: keepPreviousData,
+    })
 
     console.log('data', data);
 
@@ -316,7 +322,7 @@ export function PlayerList({
         return [
             teams[focusIndex],
             ...teams.slice(0, focusIndex),
-            ...teams.slice(focusIndex+1, teams.length),
+            ...teams.slice(focusIndex + 1, teams.length),
         ]
     };
 
@@ -339,7 +345,8 @@ export function PlayerList({
                     <tbody>
                     {
                         flatten(data?.pages?.map(p => p.matches) || []).map((match, index) =>
-                            <tr key={match.matchId} className={`bg-white border-b ${bgColor.default} dark:border-gray-700`}>
+                            <tr key={match.matchId}
+                                className={`bg-white border-b ${bgColor.default} dark:border-gray-700`}>
                                 <td className="py-4 px-6">
 
                                     <div className="flex flex-row space-x-4 items-center w-[200px]">
@@ -368,7 +375,8 @@ export function PlayerList({
                                         <div className="flex flex-row space-x-4">
                                             {
                                                 sortTeamByCurrentPlayer(match.teams).map((team, index) => (
-                                                    <div key={team.teamId} className="flex flex-row items-center space-x-3">
+                                                    <div key={team.teamId}
+                                                         className="flex flex-row items-center space-x-3">
                                                         <div className="flex flex-col space-y-3">
                                                             {
                                                                 team.players.map((player) => (
@@ -400,7 +408,7 @@ export function PlayerList({
                                                                 team.players.map((player) => (
                                                                     <Player key={player.slot}
                                                                             bold={player.profileId == profileId}
-                                                                            player={player} reversed={true} />
+                                                                            player={player} reversed={true}/>
                                                                 ))
                                                             }
                                                         </div>
@@ -465,15 +473,19 @@ export function Player({player, reversed, bold}: Props) {
     if (reversed) {
         return (
             <div className={`flex flex-row space-x-2 max-w-[400px] items-center border border-1 p-2 rounded`}
-                 style={{borderColor: bb, background: `linear-gradient(to right, ${player.colorHex + alpha}, #00000000)`}}>
+                 style={{
+                     borderColor: bb,
+                     background: `linear-gradient(to right, ${player.colorHex + alpha}, #00000000)`
+                 }}>
                 <Link className="flex flex-row space-x-1 items-center" href='/profile/[profileId]'
                       as={`/profile/${player.profileId}`}>
                     <img src={player.civImageUrl} className="w-[18px]"/>
                     <div className="w-[100px] truncate text-left">{player.civName}</div>
                 </Link>
-                <Link className={`flex flex-row w-[150px] truncate cursor-pointer ${bold && ' '} text-left hover:underline`}
-                      href='/profile/[profileId]'
-                      as={`/profile/${player.profileId}`}>
+                <Link
+                    className={`flex flex-row w-[150px] truncate cursor-pointer ${bold && ' '} text-left hover:underline`}
+                    href='/profile/[profileId]'
+                    as={`/profile/${player.profileId}`}>
                     {player.name}
                     {player.verified &&
                         <FontAwesomeIcon
@@ -484,7 +496,11 @@ export function Player({player, reversed, bold}: Props) {
                     }
                 </Link>
                 <div className="w-9">{player.rating}</div>
-                <div className="w-9 text-right" style={{color: player.ratingDiff > 0 ? '#22c55e' : '#ef4444', fontVariant: 'tabular-nums', font:'14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'}}>{signed(player.ratingDiff, reversed)}</div>
+                <div className="w-9 text-right" style={{
+                    color: player.ratingDiff > 0 ? '#22c55e' : '#ef4444',
+                    fontVariant: 'tabular-nums',
+                    font: '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+                }}>{signed(player.ratingDiff, reversed)}</div>
 
                 <div className="w-[16px]">
                     {
@@ -513,11 +529,16 @@ export function Player({player, reversed, bold}: Props) {
                 }
             </div>
 
-            <div className="w-9" style={{color: player.ratingDiff > 0 ? '#22c55e' : '#ef4444', fontVariant: 'tabular-nums', font:'14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'}}>{signed(player.ratingDiff, !reversed)}</div>
+            <div className="w-9" style={{
+                color: player.ratingDiff > 0 ? '#22c55e' : '#ef4444',
+                fontVariant: 'tabular-nums',
+                font: '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+            }}>{signed(player.ratingDiff, !reversed)}</div>
             <div className="w-9">{player.rating}</div>
-            <Link className={`flex flex-row w-[150px] truncate cursor-pointer ${bold && ' '} text-right hover:underline`}
-                  href='/profile/[profileId]'
-                  as={`/profile/${player.profileId}`}>
+            <Link
+                className={`flex flex-row w-[150px] truncate cursor-pointer ${bold && ' '} text-right hover:underline`}
+                href='/profile/[profileId]'
+                as={`/profile/${player.profileId}`}>
                 {player.name}
                 {player.verified &&
                     <FontAwesomeIcon

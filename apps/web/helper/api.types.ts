@@ -46,7 +46,7 @@ export interface IFetchLeaderboardParams {
     extend?: string;
     perPage?: number
 
-    pageParam?: number;
+    pageParam?: number | unknown;
 }
 
 
@@ -180,9 +180,9 @@ export interface IProfileLeaderboardResult {
     maxRating?: number
     lastMatchTime?: string
     drops?: number
-    losses?: number
+    losses: number
     streak?: number
-    wins?: number
+    wins: number
     updatedAt?: string
     rankCountry?: number
 }
@@ -365,7 +365,7 @@ export interface IFetchMatchesParams {
     profileIds?: number[];
     country?: string;
 
-    pageParam?: string;
+    pageParam?: number | unknown;
 }
 
 
@@ -377,7 +377,7 @@ export interface IFetchProfileParams {
     profileId?: number;
     country?: string;
 
-    pageParam?: string;
+    pageParam?: number | unknown;
     extend?: string;
 }
 
@@ -388,7 +388,7 @@ export interface IFetchProfileRatingParams {
     profileId?: number;
     country?: string;
 
-    pageParam?: string;
+    pageParam?: number | unknown;
 }
 
 
