@@ -2,8 +2,8 @@
 
 import {useState} from 'react'
 import {Combobox} from '@headlessui/react'
-import {useQuery} from "@tanstack/react-query";
-import {fetchProfile, fetchProfiles} from "@/helper/api";
+import {keepPreviousData, useQuery} from "@tanstack/react-query";
+import {fetchProfiles} from "@/helper/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {bgColor, borderColor, textColor} from "./style.utils";
@@ -18,19 +18,19 @@ export default function GlobalSearch() {
     const [selectedPerson, setSelectedPerson] = useState(null)
     const router = useRouter()
 
-    const profiles = useQuery(
-        ['profiles', query],
-        async (context: any) => {
+    const profiles = useQuery({
+        queryKey: ['profiles', query],
+        queryFn: async (context: any) => {
             if (query?.length > 2) {
                 return await fetchProfiles({
                     ...context,
                     search: query,
                 });
             }
-            return { profiles: [] };
-        }, {
-            keepPreviousData: true,
-        });
+            return {profiles: []};
+        },
+        placeholderData: keepPreviousData,
+    });
 
     const navigateToProfile = (profile) => {
         router.push(`/profile/${profile.profileId}`);

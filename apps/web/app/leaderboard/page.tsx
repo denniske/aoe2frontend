@@ -1,8 +1,8 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {fetchLeaderboard, fetchLeaderboards} from "@/helper/api";
-import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
+import {keepPreviousData, useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {flatten} from "lodash";
 import {ILeaderboardDef} from "@/helper/api.types";
 import useDebounce from "@/hooks/use-debounce";
@@ -19,14 +19,19 @@ export default function Index() {
 
     const {
         data,
-    } = useQuery(['leaderboards'], () => fetchLeaderboards(), {
-        onSuccess: (data) => {
-            setLeaderboard(x => x || data[0]);
-        },
+    } = useQuery({
+        queryKey: ['leaderboards'],
+        queryFn: () => fetchLeaderboards(),
     });
 
-    console.log('data', data);
-    console.log('leaderboard', leaderboard);
+    useEffect(() => {
+        if (data) {
+            setLeaderboard(data[0]);
+        }
+    }, [data]);
+
+    // console.log('data', data);
+    // console.log('leaderboard', leaderboard);
 
     return (
         <div className="flex flex-col">
@@ -107,9 +112,8 @@ export default function Index() {
 export function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef, search: string }) {
     const debouncedSearch = useDebounce(search, 600);
 
-    console.log('--------------');
-    console.log('search', search);
-    console.log('leaderboard.leaderboardId', leaderboard.leaderboardId);
+    // console.log('search', search);
+    // console.log('leaderboard.leaderboardId', leaderboard.leaderboardId);
 
     const {
         data,
@@ -119,20 +123,21 @@ export function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef
         isFetching,
         isFetchingNextPage,
         status,
-    } = useInfiniteQuery(
-        ['leaderboard-players', search, leaderboard.leaderboardId],
-        (context) => {
+    } = useInfiniteQuery({
+        queryKey: ['leaderboard-players', search, leaderboard.leaderboardId],
+        queryFn: (context) => {
             return fetchLeaderboard({
                 ...context,
                 search: context.queryKey[1] as string,
                 leaderboardId: context.queryKey[2] as number,
             });
-        }, {
-            getNextPageParam: (lastPage, pages) => lastPage.page + 1,
-            keepPreviousData: true,
-            // refetchOnMount: false,
-            // staleTime: 10000,
-        })
+        },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, pages) => lastPage.page + 1,
+        placeholderData: keepPreviousData,
+        // refetchOnMount: false,
+        // staleTime: 10000,
+    })
 
     // console.log('data', data);
 

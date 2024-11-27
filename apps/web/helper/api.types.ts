@@ -46,7 +46,7 @@ export interface IFetchLeaderboardParams {
     extend?: string;
     perPage?: number
 
-    pageParam?: string;
+    pageParam?: number;
 }
 
 
