@@ -4,7 +4,6 @@
     "license": "MIT",
     "scripts": {
         "start": "nx serve",
-        "web": "nx serve web --port 4300",
         "build:web": "nx build web",
         "upload:assets": "ts-node tools/upload-public-s3.ts"
     },

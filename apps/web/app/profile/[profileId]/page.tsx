@@ -60,15 +60,15 @@ export default function ProfilePage() {
         enabled: !!profileId
     });
 
-    console.log('profileId', profileId);
-    console.log('enabled', !!profileId);
-    console.log('profile?.data', profile?.data);
+    // console.log('profileId', profileId);
+    // console.log('enabled', !!profileId);
+    // console.log('profile?.data', profile?.data);
 
     if (!(leaderboards?.data && profileId && profile?.data)) {
         return <div></div>;
     }
 
-    console.log('leaderboard', leaderboard);
+    // console.log('leaderboard', leaderboard);
 
     return (
         <div className="flex flex-col">
