@@ -1,4 +1,4 @@
-import {getConfig} from "../helper/config";
+import {getConfig} from "@/helper/config";
 
 const config = getConfig();
 

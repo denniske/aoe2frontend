@@ -1,18 +1,20 @@
+"use client";
+
 import {useState} from "react";
-import {fetchLeaderboard, fetchLeaderboards} from "../helper/api";
+import {fetchLeaderboard, fetchLeaderboards} from "@/helper/api";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {flatten} from "lodash";
-import {ILeaderboardDef} from "../helper/api.types";
-import useDebounce from "../hooks/use-debounce";
+import {ILeaderboardDef} from "@/helper/api.types";
+import useDebounce from "@/hooks/use-debounce";
 import Link from "next/link";
-import {formatAgo} from "../helper/util";
-import LocalSearch from "../components/local-search";
-import Tabs from "../components/tabs";
-import {bgColor} from "../components/style.utils";
+import {formatAgo} from "@/helper/util";
+import LocalSearch from "@/components/local-search";
+import Tabs from "@/components/tabs";
+import {bgColor} from "@/components/style.utils";
 
 
 export default function Index() {
-    const [leaderboard, setLeaderboard] = useState(null);
+    const [leaderboard, setLeaderboard] = useState<ILeaderboardDef | null>(null);
     const [search, setSearch] = useState('');
 
     const {
@@ -23,8 +25,8 @@ export default function Index() {
         },
     });
 
-    // console.log('data', data);
-    // console.log('leaderboard', leaderboard);
+    console.log('data', data);
+    console.log('leaderboard', leaderboard);
 
     return (
         <div className="flex flex-col">
@@ -105,6 +107,10 @@ export default function Index() {
 export function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef, search: string }) {
     const debouncedSearch = useDebounce(search, 600);
 
+    console.log('--------------');
+    console.log('search', search);
+    console.log('leaderboard.leaderboardId', leaderboard.leaderboardId);
+
     const {
         data,
         error,
@@ -124,6 +130,8 @@ export function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef
         }, {
             getNextPageParam: (lastPage, pages) => lastPage.page + 1,
             keepPreviousData: true,
+            // refetchOnMount: false,
+            // staleTime: 10000,
         })
 
     // console.log('data', data);

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTheme} from "victory";
-import useDimensions from "../hooks/use-dimensions";
+import useDimensions from "@/hooks/use-dimensions";
 import {isAfter, subDays, subMonths, subWeeks} from "date-fns";
-import {IProfileRatingsResult} from "../helper/api.types";
-import {formatDateShort, formatMonth, formatTime, formatYear} from "../helper/util";
+import {IProfileRatingsResult} from "@/helper/api.types";
+import {formatDateShort, formatMonth, formatTime, formatYear} from "@/helper/util";
 import {merge} from "lodash";
 
 interface IRatingProps {

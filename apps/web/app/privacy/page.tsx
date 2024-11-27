@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import React from "react";
-import {getConfig} from "../helper/config";
+import {getConfig} from "@/helper/config";
 
 const config = getConfig();
 
-export default function Privacy() {
+export default function Page() {
     const appSlug = config.app.slug;
     const appName = config.app.name;
     return (

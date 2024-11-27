@@ -76,6 +76,7 @@ export async function fetchMatches(params: IFetchMatchesParams) {
 }
 
 export async function fetchLeaderboard(params: IFetchLeaderboardParams) {
+    console.log('fetchLeaderboard', params);
     const queryString = makeQueryString(decamelizeKeys({
         ...removeReactQueryParams(params),
         page: params.pageParam || 1,

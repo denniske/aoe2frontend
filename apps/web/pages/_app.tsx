@@ -7,8 +7,8 @@ import {Hydrate, QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import NoSSRWrapper from "../other/no-ssr-wrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
-import GlobalSearch from "../components/global-search";
-import {getConfig} from "../helper/config";
+import GlobalSearch from "@/components/global-search";
+import {getConfig} from "@/helper/config";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { polyfillCountryFlagEmojis } from 'country-flag-emoji-polyfill';
@@ -94,7 +94,7 @@ function CustomApp({Component, pageProps, router}: AppProps) {
                                     <GlobalSearch></GlobalSearch>
 
                                     <div className="">
-                                        <Link className="cursor-pointer hover:underline" href='/leaderboard' as={`/leaderboard`}>
+                                        <Link className="cursor-pointer hover:underline" href='/apps/web/pages/leaderboard2' as={`/leaderboard`}>
                                             Leaderboard
                                         </Link>
                                     </div>

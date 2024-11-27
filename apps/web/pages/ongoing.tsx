@@ -3,16 +3,16 @@ import Link from "next/link";
 import {differenceInSeconds} from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown, faChevronRight, faCrown, faSkull} from "@fortawesome/free-solid-svg-icons";
-import {ILobbiesMatch, IMatchesMatch, IPlayerNew} from "../helper/api.types";
-import {dateReviver, formatAgo} from "../helper/util";
+import {ILobbiesMatch, IMatchesMatch, IPlayerNew} from "@/helper/api.types";
+import {dateReviver, formatAgo} from "@/helper/util";
 import {cloneDeep, orderBy} from "lodash";
 import Image from 'next/image'
 
 import {ICloseEvent, w3cwebsocket} from "websocket";
 import produce from "immer"
-import LocalSearch from "../components/local-search";
-import {getConfig} from "../helper/config";
-import {bgColor} from "../components/style.utils";
+import LocalSearch from "@/components/local-search";
+import {getConfig} from "@/helper/config";
+import {bgColor} from "@/components/style.utils";
 
 const config = getConfig();
 

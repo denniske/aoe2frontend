@@ -1,9 +1,9 @@
 import {useState} from "react";
-import {fetchLeaderboard, fetchLeaderboards} from "../helper/api";
+import {fetchLeaderboard, fetchLeaderboards} from "@/helper/api";
 import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
-import {ILeaderboardDef} from "../helper/api.types";
+import {ILeaderboardDef} from "@/helper/api.types";
 import {flatten} from "lodash";
-import {bgColor} from "../components/style.utils";
+import {bgColor} from "@/components/style.utils";
 
 
 export default function Index() {

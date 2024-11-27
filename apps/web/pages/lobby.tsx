@@ -2,12 +2,12 @@ import React, {Fragment, useEffect, useState} from "react";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown, faChevronRight, faCrown, faSkull} from "@fortawesome/free-solid-svg-icons";
-import {ILobbiesMatch, IMatchesMatchPlayer2, IPlayerNew} from "../helper/api.types";
+import {ILobbiesMatch, IMatchesMatchPlayer2, IPlayerNew} from "@/helper/api.types";
 import {ICloseEvent, w3cwebsocket} from "websocket";
 import produce from "immer"
-import LocalSearch from "../components/local-search";
-import {getConfig} from "../helper/config";
-import {bgColor} from "../components/style.utils";
+import LocalSearch from "@/components/local-search";
+import {getConfig} from "@/helper/config";
+import {bgColor} from "@/components/style.utils";
 
 const config = getConfig();
 

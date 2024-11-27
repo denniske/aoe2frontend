@@ -3,18 +3,18 @@ import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 import {flatten} from "lodash";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {fetchLeaderboards, fetchMatches, fetchProfile} from "../../helper/api";
-import {ILeaderboardDef, IMatchesMatch, IPlayerNew, IProfileLeaderboardResult, ITeamNew} from "../../helper/api.types";
-import useDebounce from "../../hooks/use-debounce";
-import {formatAgo} from "../../helper/util";
+import {fetchLeaderboards, fetchMatches, fetchProfile} from "../@/helper/api";
+import {ILeaderboardDef, IMatchesMatch, IPlayerNew, IProfileLeaderboardResult, ITeamNew} from "../@/helper/api.types";
+import useDebounce from "../@/hooks/use-debounce";
+import {formatAgo} from "../@/helper/util";
 import {differenceInSeconds, format} from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChartLine, faCheckCircle, faCrown, faSkull} from "@fortawesome/free-solid-svg-icons";
-import Rating from "../../components/rating";
-import Tabs from "../../components/tabs";
-import {classNames} from "../../components/global-search";
-import LocalSearch from "../../components/local-search";
-import {bgColor, borderColor, textColor} from "../../components/style.utils";
+import Rating from "../@/components/rating";
+import Tabs from "../@/components/tabs";
+import {classNames} from "../@/components/global-search";
+import LocalSearch from "../@/components/local-search";
+import {bgColor, borderColor, textColor} from "../@/components/style.utils";
 
 
 export default function ProfilePage() {

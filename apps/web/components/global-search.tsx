@@ -1,11 +1,13 @@
+"use client";
+
 import {useState} from 'react'
 import {Combobox} from '@headlessui/react'
 import {useQuery} from "@tanstack/react-query";
-import {fetchProfile, fetchProfiles} from "../helper/api";
+import {fetchProfile, fetchProfiles} from "@/helper/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
-import {useRouter} from "next/router";
 import {bgColor, borderColor, textColor} from "./style.utils";
+import {useRouter} from "next/navigation";
 
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
