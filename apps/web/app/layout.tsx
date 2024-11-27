@@ -7,6 +7,7 @@ import GlobalSearch from "@/components/global-search";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 import {createClient} from "@/helper/supabase/server";
+import {Header} from "@/components/header";
 
 polyfillCountryFlagEmojis();
 
@@ -14,7 +15,7 @@ const config = getConfig();
 
 export const metadata = {
     title: config.app.name,
-    description: 'Track your games now.',
+    description: 'Track your AoE II Definitive Edition games. Analyze your performance and compare with your friends.',
 }
 
 export default async function RootLayout({children}: {
@@ -27,6 +28,8 @@ export default async function RootLayout({children}: {
     // if (error || !data?.user) {
     //     redirect('/login')
     // }
+
+    console.log('user', data?.user);
 
     return (
         <ReactQueryClientProvider>
@@ -45,61 +48,7 @@ export default async function RootLayout({children}: {
 
                 <div className="flex flex-col px-6 py-4 min-h-[100vh] w-full max-w-[1200px] m-x-auto">
 
-                    <div className="flex flex-row space-x-14 mt-4 mb-6 items-center">
-                        <div className="text-2xl font-bold">
-                            <Link className="cursor-pointer" href='/' as={`/`}>
-                                {config.app.name}
-                            </Link>
-                        </div>
-
-                        <GlobalSearch></GlobalSearch>
-
-                        <div className="">
-                            <Link className="cursor-pointer hover:underline" href='/apps/web/pages/leaderboard2'
-                                  as={`/leaderboard`}>
-                                Leaderboard
-                            </Link>
-                        </div>
-                        <div className="">
-                            <Link className="cursor-pointer hover:underline" href='/lobby' as={`/lobby`}>
-                                Lobbies
-                            </Link>
-                        </div>
-                        <div className="">
-                            <Link className="cursor-pointer hover:underline" href='/ongoing' as={`/ongoing`}>
-                                Ongoing Matches
-                            </Link>
-                        </div>
-
-                        <div className="">
-                            <Link className="cursor-pointer hover:underline" href='/' as={`/`}>
-                                App
-                            </Link>
-                        </div>
-
-                        {
-                            data?.user &&
-                            <div className="">
-                                <Link className="cursor-pointer hover:underline" href='/' as={`/`}>
-                                    <button className="bg-gray-100 p-2 rounded-md">
-                                        Account {data?.user?.email}
-                                    </button>
-                                </Link>
-                            </div>
-                        }
-
-                        {
-                            !data?.user &&
-                            <div className="">
-                                <Link className="cursor-pointer hover:underline" href='/login' as={`/login`}>
-                                    <button className="bg-gray-100 p-2 rounded-md">
-                                        Login
-                                    </button>
-                                </Link>
-                            </div>
-                        }
-
-                    </div>
+                    <Header />
 
                     {children}
 
@@ -111,18 +60,18 @@ export default async function RootLayout({children}: {
                             config.game == 'aoe2' &&
                             <div className="">
                                 <Link className="cursor-pointer hover:underline" href='/api-nightbot'
-                                          as={`/api-nightbot`}>
-                                        Api / Nightbot
-                                    </Link>
-                                </div>
-                            }
+                                      as={`/api-nightbot`}>
+                                    Api / Nightbot
+                                </Link>
+                            </div>
+                        }
 
-                            <a href={`https://status.${config.host}`} target="_blank"
-                               className="flex flex-row space-x-2 items-center cursor-pointer hover:underline">
-                                <span>Status</span>
-                                <FontAwesomeIcon icon={faUpRightFromSquare} className="w-4 h-4"
-                                                 color="grey"/>
-                            </a>
+                        <a href={`https://status.${config.host}`} target="_blank"
+                           className="flex flex-row space-x-2 items-center cursor-pointer hover:underline">
+                            <span>Status</span>
+                            <FontAwesomeIcon icon={faUpRightFromSquare} className="w-4 h-4"
+                                             color="grey"/>
+                        </a>
                     </div>
 
                     <p className="pt-8 pb-4 text-xs md:text-sm text-center max-w-4xl mx-auto px-4 md:px-8">
