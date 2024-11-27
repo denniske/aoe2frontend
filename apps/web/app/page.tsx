@@ -2,7 +2,7 @@ import {getConfig} from "@/helper/config";
 
 const config = getConfig();
 
-export function Index() {
+export function Page() {
     return (
         <div className="flex flex-row">
             <div className="flex-1 p-8 pt-32">
@@ -56,4 +56,4 @@ export function Index() {
     );
 }
 
-export default Index;
+export default Page;

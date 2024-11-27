@@ -2,7 +2,7 @@ import {getConfig} from "@/helper/config";
 
 const config = getConfig();
 
-export default function ApiNightbot() {
+export default function Page() {
     return (
         <div className="flex flex-col">
 
