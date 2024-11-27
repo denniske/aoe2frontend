@@ -104,7 +104,7 @@ function CustomApp({Component, pageProps, router}: AppProps) {
                                         </Link>
                                     </div>
                                     <div className="">
-                                        <Link className="cursor-pointer hover:underline" href='/ongoing' as={`/ongoing`}>
+                                        <Link className="cursor-pointer hover:underline" href='/apps/web/app/ongoing/ongoing' as={`/ongoing`}>
                                             Ongoing Matches
                                         </Link>
                                     </div>

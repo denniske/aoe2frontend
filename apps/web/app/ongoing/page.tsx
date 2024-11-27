@@ -1,3 +1,5 @@
+"use client";
+
 import React, {Fragment, useEffect, useState} from "react";
 import Link from "next/link";
 import {differenceInSeconds} from "date-fns";
@@ -161,7 +163,7 @@ export function getSpeedFactor(speed: AoeSpeed) {
     return speedFactorDict[speed];
 }
 
-export const formatDuration = (durationInSeconds: number) => {
+const formatDuration = (durationInSeconds: number) => {
     if (!durationInSeconds) return '00:00'; // divide by 0 protection
     const minutes = Math.abs(Math.floor(durationInSeconds / 60) % 60);
     const hours = Math.abs(Math.floor(durationInSeconds / 60 / 60));
@@ -209,7 +211,7 @@ export function PlayerList({search}: { search: string }) {
     };
 
     useEffect(() => {
-        let socket = null;
+        let socket: w3cwebsocket | null = null;
         connect().then((s) => socket = s);
         return () => {
             socket?.close();
@@ -224,7 +226,7 @@ export function PlayerList({search}: { search: string }) {
                 return match.name.toLowerCase().includes(part.toLowerCase()) ||
                        match.mapName.toLowerCase().includes(part.toLowerCase()) ||
                        match.gameModeName.toLowerCase().includes(part.toLowerCase()) ||
-                       match.server.toLowerCase().includes(part.toLowerCase()) ||
+                       match.server!.toLowerCase().includes(part.toLowerCase()) ||
                        match.players?.some((player) => player?.name?.toLowerCase().includes(part.toLowerCase()));
                 });
         });
@@ -398,15 +400,13 @@ export function Player({ player }: Props) {
             <Link className="w-[150px] truncate cursor-pointer hover:underline" href='/profile/[profileId]' as={`/profile/${player.profileId}`}>
                 {player.name}
             </Link>
-            <Link className="flex flex-row space-x-1 items-center" legacyBehavior href='/profile/[profileId]' as={`/profile/${player.profileId}`}>
-                {
-                    player.civ &&
-                    <>
-                        <Image alt="" width="18" height="18" src={player.civImageUrl} />
-                        <div className="w-[100px] truncate">{player.civName}</div>
-                    </>
-                }
-            </Link>
+            {
+                player.civ &&
+                <Link className="flex flex-row space-x-1 items-center" href='/profile/[profileId]' as={`/profile/${player.profileId}`}>
+                    <Image alt="" width="18" height="18" src={player.civImageUrl} />
+                    <div className="w-[100px] truncate">{player.civName}</div>
+                </Link>
+            }
         </div>
     )
 }
