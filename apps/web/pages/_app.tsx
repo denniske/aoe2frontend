@@ -99,7 +99,7 @@ function CustomApp({Component, pageProps, router}: AppProps) {
                                         </Link>
                                     </div>
                                     <div className="">
-                                        <Link className="cursor-pointer hover:underline" href='/lobby' as={`/lobby`}>
+                                        <Link className="cursor-pointer hover:underline" href='/apps/web/app/lobby/lobby' as={`/lobby`}>
                                             Lobbies
                                         </Link>
                                     </div>

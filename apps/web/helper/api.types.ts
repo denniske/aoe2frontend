@@ -254,6 +254,7 @@ export interface IProfilesResultProfile {
     name: string;
     games: number;
     country: string;
+    verified: boolean;
 }
 
 export interface IProfilesResult {
@@ -266,18 +267,18 @@ export interface IProfilesResult {
 
 
 
-export interface IFetchProfilesProfile {
-    profileId: number;
-    name: string;
-    games: number;
-    country: string;
-}
-
-
-export interface IProfilesResult {
-    page: number;
-    profiles: IFetchProfilesProfile[];
-}
+// export interface IFetchProfilesProfile {
+//     profileId: number;
+//     name: string;
+//     games: number;
+//     country: string;
+// }
+//
+//
+// export interface IProfilesResult {
+//     page: number;
+//     profiles: IFetchProfilesProfile[];
+// }
 
 
 export interface IMatchesResult {

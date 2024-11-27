@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
 import {bgColor, borderColor, textColor} from "./style.utils";
 import {useRouter} from "next/navigation";
+import {IProfilesResultProfile} from "@/helper/api.types";
 
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -58,7 +59,7 @@ export default function GlobalSearch() {
                         className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {filteredPeople.map((person) => (
                             <Combobox.Option
-                                key={person.id}
+                                key={person.profileId}
                                 value={person}
                                 className={({active}) =>
                                     classNames(

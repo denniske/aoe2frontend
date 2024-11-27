@@ -1,3 +1,5 @@
+"use client";
+
 import React, {Fragment, useEffect, useState} from "react";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -189,7 +191,7 @@ export function PlayerList({search}: { search: string }) {
     };
 
     useEffect(() => {
-        let socket = null;
+        let socket: w3cwebsocket | null = null;
         connect().then((s) => socket = s);
         return () => {
             socket?.close();
@@ -205,7 +207,7 @@ export function PlayerList({search}: { search: string }) {
                 return match.name.toLowerCase().includes(part.toLowerCase()) ||
                     match.mapName.toLowerCase().includes(part.toLowerCase()) ||
                     match.gameModeName.toLowerCase().includes(part.toLowerCase()) ||
-                    match.server.toLowerCase().includes(part.toLowerCase()) ||
+                    match.server!.toLowerCase().includes(part.toLowerCase()) ||
                     match.players?.some((player) => player?.name?.toLowerCase().includes(part.toLowerCase()));
             });
         });
