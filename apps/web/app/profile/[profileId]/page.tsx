@@ -68,6 +68,20 @@ export default function ProfilePage() {
         return <div></div>;
     }
 
+    const follow = async () => {
+        fetch('https://api.aoe2companion.com/follow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({profileId: profileId}),
+        }).then(response => {
+            if (response.ok) {
+                console.log('followed');
+            }
+        })
+    };
+
     // console.log('leaderboard', leaderboard);
 
     return (
@@ -86,6 +100,9 @@ export default function ProfilePage() {
                             icon={faCheckCircle}/>
                     }
                     </span>
+
+                    <button onClick={follow}>FOLLOW THIS USER</button>
+
                 </div>
                 <div className="text-md ml-9">
                     {profile?.data?.games} games

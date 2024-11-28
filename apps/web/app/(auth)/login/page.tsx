@@ -13,8 +13,6 @@ export default function LoginPage() {
     const [password, setPassword] = useState("123abc");
 
     const login = async () => {
-        // const supabase = createClient();
-
         const { error, data } = await supabaseClient.auth.signInWithPassword({
             email,
             password,
@@ -31,7 +29,6 @@ export default function LoginPage() {
     };
 
     const signup = async () => {
-        // const supabase = createClient();
         const { error, data } = await supabaseClient.auth.signUp({
             email,
             password,
@@ -48,7 +45,6 @@ export default function LoginPage() {
     };
 
     const loginWithDiscord = async () => {
-        // const supabase = createClient();
         const { error, data } = await supabaseClient.auth.signInWithOAuth({
             provider: 'discord',
             options: {
@@ -67,8 +63,6 @@ export default function LoginPage() {
         setMethod(method);
         setErrorMessage("");
     };
-
-
 
     return (
         <div className="w-full flex flex-col items-center">
