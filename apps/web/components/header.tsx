@@ -46,7 +46,7 @@ export function Header() {
         {
             user &&
             <div className="">
-                <Link className="cursor-pointer hover:underline" href="/" as={`/`}>
+                <Link className="cursor-pointer hover:underline" href="/account" as={`/account`}>
                     <button className="bg-gray-100 p-2 rounded-md">
                         Account {user?.email}
                     </button>

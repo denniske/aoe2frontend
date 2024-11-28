@@ -74,6 +74,7 @@
         "regenerator-runtime": "0.13.7",
         "tslib": "^2.3.0",
         "victory": "^35.0.8",
-        "websocket": "^1.0.34"
+        "websocket": "^1.0.34",
+        "steam-signin": "^1.0.4"
     }
 }

@@ -24,7 +24,7 @@ import { type NextRequest } from 'next/server'
 //     }
 //
 //     // URL to redirect to after sign up process completes
-//     return NextResponse.redirect(`${origin}/private`);
+//     return NextResponse.redirect(`${origin}/account`);
 // }
 
 

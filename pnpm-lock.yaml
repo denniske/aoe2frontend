@@ -83,6 +83,9 @@ importers:
       regenerator-runtime:
         specifier: 0.13.7
         version: 0.13.7
+      steam-signin:
+        specifier: ^1.0.4
+        version: 1.0.4
       tslib:
         specifier: ^2.3.0
         version: 2.4.0
@@ -5890,6 +5893,14 @@ packages:
   statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
+
+  steam-signin@1.0.4:
+    resolution: {integrity: sha512-uWC4rvrJ3UVDnKX8fnQ2Jevyv9gEittOPtCX4jDYnyjIh6E4cS47cjWaq/T8UHAEHvfy4GRhEvQ2FmnXmmOgyA==}
+    engines: {node: '>=12.0.0'}
+
+  steamid@2.1.0:
+    resolution: {integrity: sha512-ndt1cvuuSC+i8fcxVsmeyRlgGsR1QsoAuIXz+eabj8/Y4GIWE2+mgHA7Hys61JDHOxttfWtXHtN2m5TNYTlORg==}
+    engines: {node: '>=12.0.0'}
 
   stop-iteration-iterator@1.0.0:
     resolution: {integrity: sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==}
@@ -12344,7 +12355,7 @@ snapshots:
       '@types/stack-utils': 2.0.3
       chalk: 4.1.2
       graceful-fs: 4.2.11
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       pretty-format: 29.7.0
       slash: 3.0.0
       stack-utils: 2.0.6
@@ -12427,7 +12438,7 @@ snapshots:
       chalk: 4.1.2
       flow-parser: 0.241.0
       graceful-fs: 4.2.11
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       neo-async: 2.6.2
       node-dir: 0.1.17
       recast: 0.21.5
@@ -12688,7 +12699,7 @@ snapshots:
       graceful-fs: 4.2.11
       invariant: 2.2.4
       jest-worker: 29.7.0
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       node-abort-controller: 3.1.1
       nullthrows: 1.1.1
       walker: 1.0.8
@@ -14134,6 +14145,12 @@ snapshots:
   statuses@1.5.0: {}
 
   statuses@2.0.1: {}
+
+  steam-signin@1.0.4:
+    dependencies:
+      steamid: 2.1.0
+
+  steamid@2.1.0: {}
 
   stop-iteration-iterator@1.0.0:
     dependencies:
