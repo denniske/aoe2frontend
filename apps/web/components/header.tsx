@@ -44,25 +44,30 @@ export function Header() {
         </div>
 
         {
-            user &&
-            <div className="">
-                <Link className="cursor-pointer hover:underline" href="/account" as={`/account`}>
-                    <button className="bg-gray-100 p-2 rounded-md">
-                        Account {user?.email}
-                    </button>
-                </Link>
-            </div>
-        }
+            process.env.VERCEL_ENV !== 'production' &&
+            <>
+                {
+                    user &&
+                    <div className="">
+                        <Link className="cursor-pointer hover:underline" href="/account" as={`/account`}>
+                            <button className="bg-gray-100 p-2 rounded-md">
+                                Account {user?.email}
+                            </button>
+                        </Link>
+                    </div>
+                }
 
-        {
-            !user &&
-            <div className="">
-                <Link className="cursor-pointer hover:underline" href="/login" as={`/login`}>
-                    <button className="bg-gray-100 p-2 rounded-md">
-                        Login
-                    </button>
-                </Link>
-            </div>
+                {
+                    !user &&
+                    <div className="">
+                        <Link className="cursor-pointer hover:underline" href="/login" as={`/login`}>
+                            <button className="bg-gray-100 p-2 rounded-md">
+                                Login
+                            </button>
+                        </Link>
+                    </div>
+                }
+            </>
         }
 
     </div>;

@@ -3,6 +3,8 @@
 import SteamSignIn from "steam-signin";
 import useAuth from "@/hooks/use-auth";
 
+// const origin = process.env.NEXT_PUBLIC_ORIGIN!;
+
 function getPatreonLoginUrl() {
     const queryString = new URLSearchParams({
         response_type: 'code',

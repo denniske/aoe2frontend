@@ -6,6 +6,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/helper/supabase/server'
 import { headers } from 'next/headers'
 import {encodedRedirect} from "@/helper/util";
+import process from "node:process";
+import {NextResponse} from "next/server";
 
 export async function login(formData: FormData) {
     const origin = (await headers()).get("origin");
