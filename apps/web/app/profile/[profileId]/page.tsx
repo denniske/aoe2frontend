@@ -268,7 +268,7 @@ const speedFactorDict = {
     3: 2.0,
 }
 
-export function getSpeedFactor(speed: AoeSpeed) {
+function getSpeedFactor(speed: AoeSpeed) {
     if (speed == null) return 1;
     return speedFactorDict[speed];
 }
@@ -302,7 +302,7 @@ function formatMatchDuration2(match: IMatchesMatch) {
 }
 
 
-export function PlayerList({
+function PlayerList({
                                leaderboard,
                                search,
                                profileId
@@ -484,7 +484,7 @@ interface Props {
     bold: boolean;
 }
 
-export function Player({player, reversed, bold}: Props) {
+function Player({player, reversed, bold}: Props) {
     const alpha = bold ? '33' : '33';
     const bb = bold ? '#777' : '#EEE';
     if (reversed) {

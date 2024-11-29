@@ -1,7 +1,7 @@
 import {format, formatDistanceToNowStrict, fromUnixTime, parseISO} from "date-fns";
 import enUS from 'date-fns/locale/en-US';
 
-import { redirect } from "next/navigation";
+import {redirect} from "next/navigation";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
@@ -34,7 +34,7 @@ export function removeReactQueryParams(params: any) {
 }
 
 export function makeQueryString(params: IParams) {
-    return  new URLSearchParams(params).toString();
+    return new URLSearchParams(params).toString();
     // return Object.keys(params)
     //     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
     //     .join('&');
@@ -55,25 +55,25 @@ export function dateReviver(key, value) {
 }
 
 export async function fetchJson(title: string, input: RequestInfo, init?: RequestInit) {
-  if (init) {
-    console.log(input, init);
-  } else {
-    console.log(input);
-  }
-  let response = null;
-  try {
-    response = await fetch(input, {
-        ...init,
-        // headers: {
-        //     apikey: apiKey,
-        // },
-        // timeout: 60 * 1000,
-    });
-    const text = await response.text();
-    return JSON.parse(text, dateReviver);
-  } catch (e) {
-    console.log(input, 'failed', response?.status);
-  }
+    if (init) {
+        console.log(input, init);
+    } else {
+        console.log(input);
+    }
+    let response: Response | null = null;
+    try {
+        response = await fetch(input, {
+            ...init,
+            // headers: {
+            //     apikey: apiKey,
+            // },
+            // timeout: 60 * 1000,
+        });
+        const text = await response.text();
+        return JSON.parse(text, dateReviver);
+    } catch (e) {
+        console.log(input, 'failed', response?.status);
+    }
 }
 
 export function formatAgo(date: Date) {

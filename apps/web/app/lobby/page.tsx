@@ -82,7 +82,7 @@ interface ISlotRemovedEvent {
 
 type ILobbyEvent = ILobbyAddedEvent | ILobbyUpdatedEvent | ILobbyRemovedEvent | ISlotAddedEvent | ISlotUpdatedEvent | ISlotRemovedEvent;
 
-export function initLobbySubscription(handler: IConnectionHandler): Promise<w3cwebsocket> {
+function initLobbySubscription(handler: IConnectionHandler): Promise<w3cwebsocket> {
     let _lobbies: any[] = [];
 
     return initConnection({
@@ -164,7 +164,7 @@ export default function LobbyPage() {
     );
 }
 
-export function PlayerList({search}: { search: string }) {
+function PlayerList({search}: { search: string }) {
     const [lobbies, setLobbies] = useState<ILobbiesMatch[]>([]);
     const [filteredLobbies, setFilteredLobbies] = useState<ILobbiesMatch[]>([]);
     const [expandedDict, setExpandedDict] = useState<{ [key: string]: boolean }>({});
@@ -364,7 +364,7 @@ interface Props {
     player: IPlayerNew;
 }
 
-export function Player({player}: Props) {
+function Player({player}: Props) {
     return (
         <div className="flex flex-row space-x-2 items-center">
             <div className="w-[16px]">

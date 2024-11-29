@@ -20,7 +20,7 @@ function useDimensions({ liveMeasure = true }: UseDimensionsArgs = {}): UseDimen
     const [dimensions, setDimensions] = useState<DimensionObject>({} as any);
     const [node, setNode] = useState(null);
 
-    const ref = useCallback(node => {
+    const ref = useCallback((node: any) => {
         setNode(node);
     }, []);
 
@@ -70,9 +70,9 @@ export interface DimensionObject {
 }
 
 export type UseDimensionsHook = [
-    (node: HTMLElement) => void,
+    (node: HTMLElement | null) => void,
     DimensionObject,
-    HTMLElement
+    HTMLElement | null
 ];
 
 export interface UseDimensionsArgs {

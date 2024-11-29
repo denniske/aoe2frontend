@@ -109,7 +109,7 @@ export default function Index() {
     );
 }
 
-export function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef, search: string }) {
+function PlayerList({leaderboard, search}: { leaderboard: ILeaderboardDef, search: string }) {
     const debouncedSearch = useDebounce(search, 600);
 
     // console.log('search', search);

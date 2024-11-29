@@ -74,7 +74,7 @@ interface IMatchRemovedEvent {
 
 type IMatchEvent = IMatchAddedEvent | IMatchUpdatedEvent | IMatchRemovedEvent;
 
-export function initMatchSubscription(handler: IConnectionHandler, followingIds?: number[]): Promise<w3cwebsocket> {
+function initMatchSubscription(handler: IConnectionHandler, followingIds?: number[]): Promise<w3cwebsocket> {
     let _matches: any[] = [];
 
     return initConnection({
@@ -158,7 +158,7 @@ const speedFactorDict = {
     3: 2.0,
 }
 
-export function getSpeedFactor(speed: AoeSpeed) {
+function getSpeedFactor(speed: AoeSpeed) {
     if (speed == null) return 1;
     return speedFactorDict[speed];
 }
@@ -183,7 +183,7 @@ function formatMatchDuration(match: IMatchesMatch) {
 }
 
 
-export function PlayerList({search}: { search: string }) {
+function PlayerList({search}: { search: string }) {
     const [matches, setMatches] = useState<ILobbiesMatch[]>([]);
     const [filteredMatches, setFilteredMatches] = useState<ILobbiesMatch[]>([]);
     const [expandedDict, setExpandedDict] = useState<{ [key: string]: boolean }>({});
@@ -379,7 +379,7 @@ interface Props {
     player: IPlayerNew;
 }
 
-export function Player({ player }: Props) {
+function Player({ player }: Props) {
     return (
         <div className="flex flex-row space-x-2 items-center">
             <div className="w-[16px]">
