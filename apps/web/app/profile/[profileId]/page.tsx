@@ -101,7 +101,7 @@ export default function ProfilePage() {
                     }
                     </span>
 
-                    <button onClick={follow}>FOLLOW THIS USER</button>
+                    {/*<button onClick={follow}>FOLLOW THIS USER</button>*/}
 
                 </div>
                 <div className="text-md ml-9">
